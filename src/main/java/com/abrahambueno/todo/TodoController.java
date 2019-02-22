@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 @Api(value = "Todo application", description = "An application that takes todo items from a user, with CRUD")
 @RestController
@@ -34,11 +36,52 @@ public class TodoController {
     public List<User> getAllUsers() {
         return userrepos.findAll();
     }
-    @GetMapping("/users/userid/{userid}")
-    @GetMapping("/users/username/{username}")
     @PostMapping("users")
+    public User createUser(@RequestBody User user) throws URISyntaxException {
+        return userrepos.save(user);
+    }
+    @GetMapping("/users/userid/{userid}")
+    public User findUserByUserid(@PathVariable long id) {
+        var foundUser = userrepos.findById(id);
+
+        if (foundUser.isPresent()) {
+            return foundUser.get();
+        } else {
+            return null;
+        }
+    }
+
+    @GetMapping("/users/username/{username}")
+    public User findUserByUsername(@PathVariable String username) {
+        var foundUser = userrepos.findByUsername(username);
+        if (foundUser != null) {
+            return foundUser;
+        } else {
+            return null;
+        }
+    }
     @PutMapping("/users/userid/{userid}")
+    public User changeUser(@RequestBody User newuser, @PathVariable long userid) throws URISyntaxException {
+        Optional<User> updateUser = userrepos.findById(userid);
+        if (updateUser.isPresent()) {
+            newuser.setUserid(userid);
+            userrepos.save(newuser);
+            return newuser;
+        } else {
+            return null;
+        }
+    }
     @DeleteMapping("users/userid/{userid}")
+    public User deleteUser(@PathVariable long userid) {
+        var foundUser = userrepos.findById(userid);
+        if (foundUser.isPresent()) {
+            userrepos.deleteById(userid);
+            return foundUser.get();
+        } else {
+            return null;
+        }
+    }
+
 
     @GetMapping("/todos")
     @GetMapping("/todos/todoid/{todoid}")
