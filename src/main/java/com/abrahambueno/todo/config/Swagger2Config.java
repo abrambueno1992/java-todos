@@ -22,18 +22,18 @@ public class Swagger2Config
     {
         return new Docket(DocumentationType.SWAGGER_2).select()
                 .apis(RequestHandlerSelectors
-                        .basePackage("com.abrahambueno.cruddysnacks"))
+                        .basePackage("com.abrahambueno.todo"))
                 .paths(PathSelectors.regex("/.*"))
                 .build().apiInfo(apiEndPointsInfo());
     }
 
     private ApiInfo apiEndPointsInfo()
     {
-        return new ApiInfoBuilder().title("Crudy Snack Bar")
-                .description("Snack Bar Revisited with CRUD")
+        return new ApiInfoBuilder().title("Todo Application")
+                .description("Todo Application with CRUD")
                 .contact(new Contact("Abraham Bueno", "http://www.abrahambueno.com", "abrambueno1992@gmail.com"))
                 .license("MIT")
-                .licenseUrl("https://github.com/LambdaSchool/java-crudysnacks/blob/master/LICENSE")
+                .licenseUrl("https://github.com/LambdaSchool/java-todos/blob/master/LICENSE")
                 .version("1.0.0")
                 .build();
     }

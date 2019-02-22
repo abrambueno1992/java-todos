@@ -1,5 +1,7 @@
 package com.abrahambueno.todo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,5 +17,9 @@ public class Todo {
     private String datestarted;
     private boolean completed;
 
-    // user id
+    // userid foreign key
+    @ManyToOne
+    @JoinColumn(name = "userid", nullable = false)
+    @JsonIgnore
+    private User userid;
 }
