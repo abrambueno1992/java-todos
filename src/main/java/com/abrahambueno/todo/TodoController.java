@@ -9,9 +9,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,4 +34,18 @@ public class TodoController {
     public List<User> getAllUsers() {
         return userrepos.findAll();
     }
+    @GetMapping("/users/userid/{userid}")
+    @GetMapping("/users/username/{username}")
+    @PostMapping("users")
+    @PutMapping("/users/userid/{userid}")
+    @DeleteMapping("users/userid/{userid}")
+
+    @GetMapping("/todos")
+    @GetMapping("/todos/todoid/{todoid}")
+    @GetMapping("/todos/users")
+    @GetMapping("/todos/active")
+    @PostMapping("/todos")
+    @PutMapping("/todos/todoid/{todoid}")
+    @DeleteMapping("/todos/todoid/{todoid}")
+
 }
