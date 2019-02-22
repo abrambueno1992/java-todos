@@ -1,5 +1,6 @@
 package com.abrahambueno.todo;
 
+import com.abrahambueno.todo.models.Todo;
 import com.abrahambueno.todo.models.User;
 import com.abrahambueno.todo.repository.TodoRepository;
 import com.abrahambueno.todo.repository.UserRepository;
@@ -82,13 +83,46 @@ public class TodoController {
         }
     }
 
-
     @GetMapping("/todos")
-    @GetMapping("/todos/todoid/{todoid}")
-    @GetMapping("/todos/users")
-    @GetMapping("/todos/active")
+    public List<Todo> getAllTodos() {
+        return todorepos.findAll();
+    }
     @PostMapping("/todos")
+    public Todo createTodo(@RequestBody Todo todo) throws URISyntaxException {
+        return todorepos.save(todo);
+    }
+    @GetMapping("/todos/todoid/{todoid}")
+    public Todo getTodoByTodoid(@PathVariable long todoid) {
+        var foundTodo = todorepos.findById(todoid);
+        if (foundTodo.isPresent()) {
+            return foundTodo.get();
+        } else {
+            return null;
+        }
+    }
+//    @GetMapping("/todos/users")
+//
+//    @GetMapping("/todos/active")
     @PutMapping("/todos/todoid/{todoid}")
+    public Todo changeTodo(@RequestBody Todo todo, @PathVariable long id) {
+        Optional<Todo> updateTodo = todorepos.findById(id);
+        if (updateTodo.isPresent()) {
+            todo.setTodoid(id);
+            todorepos.save(todo);
+            return todo;
+        } else {
+            return null;
+        }
+    }
     @DeleteMapping("/todos/todoid/{todoid}")
+    public Todo deleteTodo(@PathVariable long todoid) {
+        var foundTodo = todorepos.findById(todoid);
+        if (foundTodo.isPresent()) {
+            todorepos.deleteById(todoid);
+            return foundTodo.get();
+        } else {
+            return null;
+        }
+    }
 
 }
