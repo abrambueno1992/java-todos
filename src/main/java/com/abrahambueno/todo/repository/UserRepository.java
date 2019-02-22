@@ -1,4 +1,7 @@
 package com.abrahambueno.todo.repository;
 
-public interface UserRepository {
+import com.abrahambueno.todo.models.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
 }

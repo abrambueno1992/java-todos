@@ -11,4 +11,27 @@ public class User {
 
     @Column(nullable = false)
     private String username;
+
+    public User() {
+    }
+
+    public User(String username) {
+        this.username = username;
+    }
+
+    public long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(long userid) {
+        this.userid = userid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
