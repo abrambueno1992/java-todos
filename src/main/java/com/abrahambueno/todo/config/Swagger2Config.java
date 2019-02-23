@@ -31,7 +31,7 @@ public class Swagger2Config
     {
         return new ApiInfoBuilder().title("Todo Application")
                 .description("Todo Application with CRUD")
-                .contact(new Contact("Abraham Bueno", "http://www.abrahambueno.com", "abrambueno1992@gmail.com"))
+                .contact(new Contact("Abraham Bueno", "http://abrahambueno.com", "abrambueno1992@gmail.com"))
                 .license("MIT")
                 .licenseUrl("https://github.com/LambdaSchool/java-todos/blob/master/LICENSE")
                 .version("1.0.0")
