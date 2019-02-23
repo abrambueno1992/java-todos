@@ -37,13 +37,13 @@ public class TodoController {
     public List<User> getAllUsers() {
         return userrepos.findAll();
     }
-    @PostMapping("users")
+    @PostMapping("/users")
     public User createUser(@RequestBody User user) throws URISyntaxException {
         return userrepos.save(user);
     }
     @GetMapping("/users/userid/{userid}")
-    public User findUserByUserid(@PathVariable long id) {
-        var foundUser = userrepos.findById(id);
+    public User findUserByUserid(@PathVariable long userid) {
+        Optional<User> foundUser = userrepos.findById(userid);
 
         if (foundUser.isPresent()) {
             return foundUser.get();
@@ -54,7 +54,7 @@ public class TodoController {
 
     @GetMapping("/users/username/{username}")
     public User findUserByUsername(@PathVariable String username) {
-        var foundUser = userrepos.findByUsername(username);
+        User foundUser = userrepos.findByUsername(username);
         if (foundUser != null) {
             return foundUser;
         } else {
@@ -74,7 +74,7 @@ public class TodoController {
     }
     @DeleteMapping("users/userid/{userid}")
     public User deleteUser(@PathVariable long userid) {
-        var foundUser = userrepos.findById(userid);
+        Optional<User> foundUser = userrepos.findById(userid);
         if (foundUser.isPresent()) {
             userrepos.deleteById(userid);
             return foundUser.get();
@@ -93,7 +93,7 @@ public class TodoController {
     }
     @GetMapping("/todos/todoid/{todoid}")
     public Todo getTodoByTodoid(@PathVariable long todoid) {
-        var foundTodo = todorepos.findById(todoid);
+        Optional<Todo> foundTodo = todorepos.findById(todoid);
         if (foundTodo.isPresent()) {
             return foundTodo.get();
         } else {
@@ -116,7 +116,7 @@ public class TodoController {
     }
     @DeleteMapping("/todos/todoid/{todoid}")
     public Todo deleteTodo(@PathVariable long todoid) {
-        var foundTodo = todorepos.findById(todoid);
+        Optional<Todo> foundTodo = todorepos.findById(todoid);
         if (foundTodo.isPresent()) {
             todorepos.deleteById(todoid);
             return foundTodo.get();

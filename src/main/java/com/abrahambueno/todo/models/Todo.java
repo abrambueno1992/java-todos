@@ -3,7 +3,6 @@ package com.abrahambueno.todo.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "todo")
@@ -15,24 +14,24 @@ public class Todo {
     @Column(nullable = false)
     private String description;
 
-    private Date datestarted;
+    private String datestarted;
     private int completed;
 
     // userid foreign key
     @ManyToOne
     @JoinColumn(name = "userid", nullable = false)
     @JsonIgnore
-    private User useridcopy;
+    private User userid;
 
     public Todo() {
     }
 
-    public Todo(String description, Date datestarted, int completed) {
-        this.description = description;
-        this.datestarted = datestarted;
-        this.completed = completed;
+//    public Todo(String description, String datestarted, int completed, User useridcopy) {
+//        this.description = description;
+//        this.datestarted = datestarted;
+//        this.completed = completed;
 //        this.useridcopy = useridcopy;
-    }
+//    }
 
     public long getTodoid() {
         return todoid;
@@ -50,11 +49,11 @@ public class Todo {
         this.description = description;
     }
 
-    public Date getDatestarted() {
+    public String getDatestarted() {
         return datestarted;
     }
 
-    public void setDatestarted(Date datestarted) {
+    public void setDatestarted(String datestarted) {
         this.datestarted = datestarted;
     }
 
@@ -66,11 +65,11 @@ public class Todo {
         this.completed = completed;
     }
 
-    public User getUseridcopy() {
-        return useridcopy;
+    public User getUserid() {
+        return userid;
     }
 
-    public void setUseridcopy(User useridcopy) {
-        this.useridcopy = useridcopy;
+    public void setUserid(User userid) {
+        this.userid = userid;
     }
 }

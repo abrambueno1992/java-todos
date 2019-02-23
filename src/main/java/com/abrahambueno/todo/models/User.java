@@ -1,6 +1,9 @@
 package com.abrahambueno.todo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -11,13 +14,16 @@ public class User {
 
     @Column(nullable = false)
     private String username;
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "userid")
+    @JsonIgnore
+    private Set<Todo> todos;
 
     public User() {
     }
 
-    public User(String username) {
-        this.username = username;
-    }
+//    public User(String username) {
+//        this.username = username;
+//    }
 
     public long getUserid() {
         return userid;
