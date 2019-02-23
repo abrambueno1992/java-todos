@@ -91,6 +91,17 @@ public class TodoController {
     public Todo createTodo(@RequestBody Todo todo) throws URISyntaxException {
         return todorepos.save(todo);
     }
+//    the todo data doesn't have any relation to a user, it's just a list with no user association
+//    @GetMapping("/todos/users")
+//    public List<Object[]> userTodos() {
+//        return todorepos.todoOfUsers();
+//    }
+    //
+
+    @GetMapping("/todos/active")
+    public List<Todo> getListNotCompleted() {
+        return todorepos.getAllCompleted();
+    }
     @GetMapping("/todos/todoid/{todoid}")
     public Todo getTodoByTodoid(@PathVariable long todoid) {
         Optional<Todo> foundTodo = todorepos.findById(todoid);
@@ -100,9 +111,7 @@ public class TodoController {
             return null;
         }
     }
-//    @GetMapping("/todos/users")
-//
-//    @GetMapping("/todos/active")
+
     @PutMapping("/todos/todoid/{todoid}")
     public Todo changeTodo(@RequestBody Todo todo, @PathVariable long id) {
         Optional<Todo> updateTodo = todorepos.findById(id);
