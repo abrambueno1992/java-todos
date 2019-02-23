@@ -12,16 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-
-@Api(value = "Todo application", description = "An application that takes todo items from a user, with CRUD")
 @RestController
+@Api(value = "Todo application", description = "An application that takes todo items from a user, with CRUD")
 @RequestMapping(path = {}, produces = MediaType.APPLICATION_JSON_VALUE)
-@ApiResponses(value = {
-        @ApiResponse(code = 200, message = "successfully retrieve list"),
-        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-})
 public class TodoController {
     @Autowired
     TodoRepository todorepos;
@@ -31,6 +24,12 @@ public class TodoController {
 
     @ApiOperation(value = "list all Users", response = List.class)
     @GetMapping("/users")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "successfully retrieve list"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
     public List<User> getAllUsers() {
         return userrepos.findAll();
     }
@@ -81,6 +80,12 @@ public class TodoController {
     }
 
     @ApiOperation(value = "list all Todo", response = List.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "successfully retrieve todo list"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
     @GetMapping("/todos")
     public List<Todo> getAllTodos() {
         return todorepos.findAll();
@@ -98,6 +103,12 @@ public class TodoController {
     //
 
     @ApiOperation(value = "list all Todo completed", response = List.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "successfully retrieve todo list completed"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
     @GetMapping("/todos/active")
     public List<Todo> getListNotCompleted() {
         return todorepos.getAllCompleted();
@@ -113,11 +124,17 @@ public class TodoController {
         }
     }
     @ApiOperation(value = "list Todo by id", response = Todo.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "successfully update todo"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
     @PutMapping("/todos/todoid/{todoid}")
-    public Todo changeTodo(@RequestBody Todo todo, @ApiParam(value = "This is the todo id", required = true) @PathVariable long id) {
-        Optional<Todo> updateTodo = todorepos.findById(id);
+    public Todo changeTodo(@RequestBody Todo todo, @ApiParam(value =  "todo id", required = true) @PathVariable long todoid) {
+        Optional<Todo> updateTodo = todorepos.findById(todoid);
         if (updateTodo.isPresent()) {
-            todo.setTodoid(id);
+            todo.setTodoid(todoid);
             todorepos.save(todo);
             return todo;
         } else {
@@ -125,6 +142,12 @@ public class TodoController {
         }
     }
     @ApiOperation(value = "Delete Todo by id", response = Todo.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "successfully delete todo"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
     @DeleteMapping("/todos/todoid/{todoid}")
     public Todo deleteTodo(@ApiParam(value = "This is the todo id", required = true) @PathVariable long todoid) {
         Optional<Todo> foundTodo = todorepos.findById(todoid);
